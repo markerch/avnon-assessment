@@ -1,0 +1,43 @@
+<mat-grid-list
+  cols="12"
+  class="grid"
+  rowHeight="1:1"
+  style="align-items: start"
+>
+  <div *ngFor="let item of displayAnswers">
+    <mat-grid-tile [colspan]="2" [rowspan]="1"></mat-grid-tile>
+    <mat-grid-tile [colspan]="8" [rowspan]="1">
+      <div class="full-width">
+        <mat-label
+          ><b>{{ item.label }}</b></mat-label
+        >
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+    <div *ngFor="let answer of item.answers">
+      <mat-grid-tile [colspan]="2" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile [colspan]="8" [rowspan]="1">
+        <div class="full-width">
+          {{ answer }}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="1"></mat-grid-tile>
+    </div>
+  </div>
+  <mat-grid-tile [colspan]="12" [rowspan]="1">
+    <mat-divider class="full-width"></mat-divider>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1"></mat-grid-tile>
+  <mat-grid-tile [colspan]="8" [rowspan]="1">
+    <button
+    type="submit"
+    class="half-width button"
+    mat-flat-button
+    color="accent"
+    (click)="navigateBack()"
+  >
+    Back to Forms Builder
+  </button>
+</mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1"></mat-grid-tile>
+</mat-grid-list>

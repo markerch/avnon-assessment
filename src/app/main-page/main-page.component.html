@@ -1,0 +1,117 @@
+<mat-grid-list
+  cols="12"
+  class="grid"
+  rowHeight="2:1"
+  style="align-items: start"
+>
+  <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of questionFields(); let k = index">
+      <div *ngIf="field.type === 'checkbox'">
+        <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+        <mat-grid-tile [colspan]="8" [rowspan]="1">
+          <div class="full-width">
+            <mat-label
+              ><b>{{ field.label }}</b></mat-label
+            >
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+        <div [formArrayName]="field.label" class="full-width">
+          <div *ngFor="let option of field.options; let i = index">
+            <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+            <mat-grid-tile [colspan]="8" [rowspan]="1">
+              <div class="full-width">
+                <div *ngIf="!isLastPosition(i, field.options) || !field.hasOtherChoice">
+                    <mat-checkbox
+                    [formControlName]="i"
+                    value="option.value"
+                    >{{ option.value }}</mat-checkbox
+                  >
+                </div>
+                <div *ngIf="isLastPosition(i, field.options) && field.hasOtherChoice">
+                    <span
+                    style="margin-left: 30px; margin-top: 30px;"
+                    *ngIf="
+                      field.hasOtherChoice &&
+                      isOtherSelected(field.hasOtherChoice ,field.label)
+                    "
+                  >
+                    <mat-form-field appearance="outline" class="half-width">
+                      <input
+                        [formControlName]="i"
+                        matInput
+                        placeholder="Please specify"
+                      />
+                    </mat-form-field>
+                  </span>
+                </div>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="field.type !== 'checkbox'">
+        <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+        <mat-grid-tile [colspan]="8" [rowspan]="1">
+          <div class="full-width">
+            <mat-label
+              ><b>{{ field.label }}</b></mat-label
+            >
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2" [rowspan]="3"> </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="field.type !== 'checkbox'"
+          [colspan]="8"
+          [rowspan]="3"
+        >
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            style="height: 100%"
+          >
+            <textarea
+              matInput
+              [formControlName]="field.label"
+              rows="3"
+            ></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="3"> </mat-grid-tile>
+      </div>
+    </div>
+
+    <mat-grid-tile [colspan]="12" [rowspan]="1">
+      <mat-divider class="full-width"></mat-divider>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <button
+        type="button"
+        class="half-width button"
+        mat-flat-button
+        color="primary"
+        (click)="openQuestionModal()"
+      >
+        Add Question
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <button
+        type="submit"
+        class="half-width button"
+        mat-flat-button
+        color="accent"
+        [disabled]="questionForm.invalid || questionFields().length < 1"
+      >
+        Review my answer >
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+  </form>
+  <mat-grid-tile [colspan]="12" [rowspan]="1"> </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,19 @@
+.grid {
+    margin-top: 50px;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.divider {
+    height: 1px;
+}
+
+.button {
+    height: 50px;
+}

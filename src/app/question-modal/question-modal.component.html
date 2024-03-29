@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Add a New Question</h2>
+<mat-dialog-content>
+  <mat-checkbox
+    [(ngModel)]="isCheckbox"
+    (ngModelChange)="checkBoxChanged($event)"
+    >Checkbox Question</mat-checkbox
+  >
+  <form [formGroup]="newQuestionForm" style="margin-top: 10px;">
+    <mat-form-field appearance="outline" class="full-width">
+      <input
+        [formControlName]="'questionLabel'"
+        matInput
+        placeholder="Type your question here"
+      />
+    </mat-form-field>
+    <div *ngIf="isCheckbox">
+      <div *ngFor="let choice of checkBoxChoices()">
+        <mat-form-field appearance="outline" class="full-width">
+          <input
+            [formControlName]="choice"
+            matInput
+            placeholder="Add answer option"
+          />
+        </mat-form-field>
+      </div>
+      <button
+        *ngIf="checkBoxChoices().length < 5"
+        type="button"
+        mat-button
+        (click)="addChoice()"
+      >
+        + Add another answer
+      </button>
+    </div>
+    
+  </form>
+  <div *ngIf="isCheckbox"><mat-checkbox [(ngModel)]="hasOtherChoice">Allow user to specify their own answer</mat-checkbox></div>
+  <div><mat-checkbox [(ngModel)]="isRequired">This field is required</mat-checkbox></div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-button (click)="onCancelClick()">Cancel</button>
+  <div class="submit-button">
+    <button type="submit" mat-button color="primary" [disabled]="isDisabled()" (click)="onSubmit()">
+      Submit
+    </button>
+  </div>
+</mat-dialog-actions>
